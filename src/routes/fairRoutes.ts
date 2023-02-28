@@ -2,7 +2,13 @@ import { Router } from 'express';
 
 const router = Router();
 
-import { getAllFairs, createFair, getFair, updateFair, deleteFair } from '../controllers/fairController';
+import { 
+    getAllFairs, 
+    createFair, 
+    getFair, 
+    updateFair, 
+    deleteFair 
+} from '../controllers/fairController';
 
 
 router.get('/', getAllFairs);

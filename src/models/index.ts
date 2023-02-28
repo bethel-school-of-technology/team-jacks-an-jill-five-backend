@@ -5,6 +5,7 @@ const dbName = 'fairDB';
 const username = 'root';
 const password = 'Password1!';
 
+
 const sequelize = new Sequelize(dbName, username, password, {
     host: 'localhost',
     port: 3306,
