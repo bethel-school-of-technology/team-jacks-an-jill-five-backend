@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const router = (0, express_1.Router)();
+const fairController_1 = require("../controllers/fairController");
+router.get('/', fairController_1.getAllFairs);
+router.post('/', fairController_1.createFair);
+router.get('/:fairId', fairController_1.getFair);
+router.put('/:fairId', fairController_1.updateFair);
+router.delete('/:fairId', fairController_1.deleteFair);
+exports.default = router;
