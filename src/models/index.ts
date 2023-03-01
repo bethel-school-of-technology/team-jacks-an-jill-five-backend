@@ -3,7 +3,7 @@ import { FairFactory } from "./fair";
 
 const dbName = 'fairDB';
 const username = 'root';
-const password = 'Password1!';
+const password = 'Password';  // For Kyle 'Password1!'
 
 
 const sequelize = new Sequelize(dbName, username, password, {
