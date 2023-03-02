@@ -70,8 +70,10 @@ function FairFactory(sequelize) {
     });
 }
 exports.FairFactory = FairFactory;
+;
 function AssociateUserFairPost() {
     user_1.User.hasMany(Fair, { foreignKey: 'userId' });
     Fair.belongsTo(user_1.User, { foreignKey: 'userId' });
 }
 exports.AssociateUserFairPost = AssociateUserFairPost;
+;

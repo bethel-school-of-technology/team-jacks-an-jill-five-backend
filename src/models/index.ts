@@ -1,20 +1,17 @@
 import { Sequelize } from "sequelize";
-import { AssociateUserFairPost, FairFactory } from "./fair";
-import { UserFactory } from "./user";
+import { FairFactory } from "./fair";
 
 const dbName = 'fairDB';
 const username = 'root';
-const password = 'Password';  // For Kyle 'Password1!'
-
+const password = 'Password1!';  // For Kyle 'Password1!'
+                              // For Sam  'Password'
 
 const sequelize = new Sequelize(dbName, username, password, {
-    host: '127.0.0.1', // or 'localhost'
+    host: 'localhost',
     port: 3306,
     dialect: 'mysql'
 });
 
 FairFactory(sequelize);
-UserFactory(sequelize);
-AssociateUserFairPost()
 
 export const db = sequelize;
