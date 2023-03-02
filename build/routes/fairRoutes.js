@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const router = (0, express_1.Router)();
 const fairController_1 = require("../controllers/fairController");
+const router = (0, express_1.Router)();
 router.get('/', fairController_1.getAllFairs);
 router.post('/', fairController_1.createFair);
 router.get('/:fairId', fairController_1.getFair);

@@ -1,57 +1,48 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AssociateUserFairPost = exports.FairFactory = exports.Fair = void 0;
+exports.UserFactory = exports.User = void 0;
 const sequelize_1 = require("sequelize");
-const user_1 = require("./user");
-class Fair extends sequelize_1.Model {
+class User extends sequelize_1.Model {
 }
-exports.Fair = Fair;
-function FairFactory(sequelize) {
-    Fair.init({
-        fairId: {
+exports.User = User;
+;
+function UserFactory(sequelize) {
+    User.init({
+        userId: {
             type: sequelize_1.DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
-        fairTitle: {
+        username: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false,
             unique: true
         },
-        fairCity: {
+        password: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false,
-            unique: false
         },
-        fairState: {
+        userEmail: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false,
-            unique: false
+            unique: true
         },
-        fairZip: {
+        userCity: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false,
-            unique: false
         },
-        fairStartDate: {
+        userState: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false,
-            unique: false
         },
-        fairEndDate: {
+        userZip: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false,
-            unique: false
         },
-        fairDescription: {
+        userReferral: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false,
-            unique: false
-        },
-        username: {
-            type: sequelize_1.DataTypes.STRING,
-            allowNull: false
         },
         createdAt: {
             type: sequelize_1.DataTypes.DATE,
@@ -65,13 +56,9 @@ function FairFactory(sequelize) {
         }
     }, {
         freezeTableName: true,
-        tableName: 'fairs',
+        tableName: 'users',
         sequelize
     });
 }
-exports.FairFactory = FairFactory;
-function AssociateUserFairPost() {
-    user_1.User.hasMany(Fair, { foreignKey: 'userId' });
-    Fair.belongsTo(user_1.User, { foreignKey: 'userId' });
-}
-exports.AssociateUserFairPost = AssociateUserFairPost;
+exports.UserFactory = UserFactory;
+;

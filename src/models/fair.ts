@@ -1,4 +1,5 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
+import { User } from "./user";
 
 export class Fair extends Model<InferAttributes<Fair>, InferCreationAttributes<Fair>>{
     declare fairId: number;
@@ -76,4 +77,9 @@ export function FairFactory(sequelize: Sequelize) {
         tableName: 'fairs',
         sequelize
     });
-}
+};
+
+export function AssociateUserFairPost() {
+    User.hasMany(Fair, { foreignKey: 'userId' });
+    Fair.belongsTo(User, { foreignKey: 'userId' });
+};
