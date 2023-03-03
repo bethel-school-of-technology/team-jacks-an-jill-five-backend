@@ -2,14 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteFair = exports.updateFair = exports.getFair = exports.createFair = exports.getAllFairs = void 0;
 const fair_1 = require("../models/fair");
+const auth_1 = require("../services/auth");
 const getAllFairs = async (req, res, next) => {
     let fairs = await fair_1.Fair.findAll();
     res.status(200).json(fairs);
 };
 exports.getAllFairs = getAllFairs;
 const createFair = async (req, res, next) => {
+    let user = await (0, auth_1.verifyUser)(req);
+    if (!user) {
+        return res.status(403).send();
+    }
     let newFair = req.body;
-    if (newFair.fairTitle && newFair.username) {
+    newFair.userId = user.userId;
+    if (newFair.fairTitle) {
         let created = await fair_1.Fair.create(newFair);
         res.status(201).json(created);
     }
@@ -34,7 +40,7 @@ const updateFair = async (req, res, next) => {
     let newFair = req.body;
     let fairFound = await fair_1.Fair.findByPk(fairId);
     if (fairFound && fairFound.fairId == newFair.fairId
-        && newFair.fairTitle && newFair.username) {
+        && newFair.fairTitle && newFair.userId) {
         await fair_1.Fair.update(newFair, {
             where: { fairId: fairId }
         });

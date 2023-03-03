@@ -1,5 +1,7 @@
 import { RequestHandler } from "express";
 import { Fair } from "../models/fair";
+import { User } from "../models/user";
+import { verifyUser } from "../services/auth";
 
 export const getAllFairs: RequestHandler = async (req, res, next) => {
     let fairs = await Fair.findAll();
@@ -7,8 +9,16 @@ export const getAllFairs: RequestHandler = async (req, res, next) => {
 }
 
 export const createFair: RequestHandler = async (req, res, next) => {
+    let user: User | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+    
     let newFair: Fair = req.body;
-    if (newFair.fairTitle && newFair.username) {
+    newFair.userId = user.userId;
+    
+    if (newFair.fairTitle) {
         let created = await Fair.create(newFair);
         res.status(201).json(created);
     }
@@ -35,7 +45,7 @@ export const updateFair: RequestHandler = async (req, res, next) => {
     let fairFound = await Fair.findByPk(fairId);
     
     if (fairFound && fairFound.fairId == newFair.fairId
-        && newFair.fairTitle && newFair.username) {
+        && newFair.fairTitle && newFair.userId) {
             await Fair.update(newFair, {
                 where: { fairId: fairId }
             });

@@ -31,7 +31,7 @@ const verifyUser = async (req) => {
         const token = authHeader.split(' ')[1];
         try {
             let decoded = await jsonwebtoken_1.default.verify(token, secret);
-            return user_1.User.findByPk(decoded.username);
+            return user_1.User.findByPk(decoded.userId);
         }
         catch (err) {
             return null;
