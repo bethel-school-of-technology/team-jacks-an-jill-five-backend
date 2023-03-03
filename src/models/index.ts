@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 import { Sequelize } from "sequelize";
-import { FairFactory } from "./fair";
+import { AssociateUserFairPost, FairFactory } from "./fair";
+import { UserFactory } from "./user";
 
 config();
 
@@ -15,6 +16,8 @@ const sequelize = new Sequelize(dbName, username, password, {
     dialect: 'mysql'
 });
 
+UserFactory(sequelize);
 FairFactory(sequelize);
+AssociateUserFairPost();
 
 export const db = sequelize;

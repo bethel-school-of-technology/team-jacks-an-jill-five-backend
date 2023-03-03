@@ -49,8 +49,8 @@ function FairFactory(sequelize) {
             allowNull: false,
             unique: false
         },
-        username: {
-            type: sequelize_1.DataTypes.STRING,
+        userId: {
+            type: sequelize_1.DataTypes.INTEGER,
             allowNull: false
         },
         createdAt: {

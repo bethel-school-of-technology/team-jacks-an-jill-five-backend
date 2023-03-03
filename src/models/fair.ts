@@ -10,7 +10,7 @@ export class Fair extends Model<InferAttributes<Fair>, InferCreationAttributes<F
     declare fairStartDate: string;
     declare fairEndDate: string;
     declare fairDescription: string;
-    declare username: string;
+    declare userId: number;
     declare createdAt?: Date;
     declare updatedAt?: Date;
 }
@@ -58,8 +58,8 @@ export function FairFactory(sequelize: Sequelize) {
             allowNull: false,
             unique: false
         },
-        username: {
-            type: DataTypes.STRING,
+        userId: {
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         createdAt: {
