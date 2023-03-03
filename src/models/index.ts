@@ -1,9 +1,12 @@
+import { config } from "dotenv";
 import { Sequelize } from "sequelize";
 import { FairFactory } from "./fair";
 
+config();
+
 const dbName = 'fairDB';
 const username = 'root';
-const password = 'Password1!';  // For Kyle 'Password1!'
+const password = process.env.DB_PASSWORD  // For Kyle 'Password1!'
                               // For Sam  'Password'
 
 const sequelize = new Sequelize(dbName, username, password, {
