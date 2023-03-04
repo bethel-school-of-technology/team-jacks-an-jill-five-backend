@@ -38,24 +38,24 @@ export function UserFactory(sequelize: Sequelize) {
         },
         userEmail: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             unique: true
         },
         userCity: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         userState: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         userZip: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         userReferral: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         createdAt: {
             type: DataTypes.DATE,

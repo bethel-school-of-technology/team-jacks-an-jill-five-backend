@@ -25,24 +25,24 @@ function UserFactory(sequelize) {
         },
         userEmail: {
             type: sequelize_1.DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             unique: true
         },
         userCity: {
             type: sequelize_1.DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         userState: {
             type: sequelize_1.DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         userZip: {
             type: sequelize_1.DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         userReferral: {
             type: sequelize_1.DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         createdAt: {
             type: sequelize_1.DataTypes.DATE,
