@@ -11,9 +11,12 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const cors = require('cors');
+app.use(cors());
+
 // routes
 app.use('/api/fairs', fairRoutes);
-app.use('/api/users', userRoutes)
+app.use('/api/users', userRoutes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.status(404).end();
