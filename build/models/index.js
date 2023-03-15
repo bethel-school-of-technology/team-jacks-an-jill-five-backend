@@ -8,10 +8,9 @@ const user_1 = require("./user");
 (0, dotenv_1.config)();
 const dbName = 'fairDB';
 const username = 'root';
-const password = process.env.DB_PASSWORD; // For Kyle 'Password1!'
-// For Sam  'Password'
+const password = process.env.DB_PASSWORD;
 const sequelize = new sequelize_1.Sequelize(dbName, username, password, {
-    host: 'localhost',
+    host: process.env.DB_LOCALHOST,
     port: 3306,
     dialect: 'mysql'
 });
