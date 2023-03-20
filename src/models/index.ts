@@ -5,12 +5,12 @@ import { UserFactory } from "./user";
 
 config();
 
-const dbName = 'fairDB';
-const username = 'root';
-const password = process.env.DB_PASSWORD
+const dbName = 'fairdb';
+const username = 'wkhammersmith';
+const password = 'jacksandjill5'
 
 const sequelize = new Sequelize(dbName, username, password, {
-    host: process.env.DB_LOCALHOST,
+    host: 'db4free.net',
     port: 3306,
     dialect: 'mysql'
 });
