@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import { db } from './models';
 import fairRoutes from './routes/fairRoutes'
 import userRoutes from './routes/userRoutes';
+import commentRoutes from './routes/commentRoutes'
 
 const app = express();
 
@@ -15,8 +16,11 @@ const cors = require('cors');
 app.use(cors());
 
 // routes
+
 app.use('/api/fairs', fairRoutes);
+app.use('/api/comments', commentRoutes);
 app.use('/api/users', userRoutes);
+
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.status(404).end();
