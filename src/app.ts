@@ -27,8 +27,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Syncing our database
-db.sync({ alter: true }).then(() => {
+db.sync({ alter: true, force: false }).then(() => {
     console.info("connected to the database!")
 });
 
-app.listen(3000);
+app.listen(3000);  
