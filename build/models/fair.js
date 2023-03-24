@@ -36,17 +36,27 @@ function FairFactory(sequelize) {
         },
         fairStartDate: {
             type: sequelize_1.DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             unique: false
         },
         fairEndDate: {
             type: sequelize_1.DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             unique: false
         },
         fairDescription: {
             type: sequelize_1.DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
+            unique: false
+        },
+        fairWebsite: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: true,
+            unique: false
+        },
+        fairImage: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: true,
             unique: false
         },
         userId: {
