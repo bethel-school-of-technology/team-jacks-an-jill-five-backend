@@ -27,6 +27,7 @@ export const signUserToken = async (user: User) => {
     return token;
 };
 
+// Decoded Token for verification
 export const verifyUser = async (req: Request) => {
     const authHeader = req.headers.authorization;
 
