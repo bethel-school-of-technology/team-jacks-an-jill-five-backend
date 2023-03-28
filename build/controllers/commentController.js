@@ -2,25 +2,32 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteComment = exports.updateComment = exports.getComment = exports.createComment = exports.getAllComments = void 0;
 const comment_1 = require("../models/comment");
+const user_1 = require("../models/user");
+const fair_1 = require("../models/fair");
 const auth_1 = require("../services/auth");
 const getAllComments = async (req, res, next) => {
-    let comments = await comment_1.Comment.findAll();
-    res.status(200).json(comments);
+    let user = await (0, auth_1.verifyUser)(req);
+    if (user) {
+        const result = await user_1.User.findByPk(user.userId, {
+            include: fair_1.Fair
+        });
+        res.status(200).json(result);
+    }
+    else {
+        res.status(401).send();
+    }
 };
 exports.getAllComments = getAllComments;
 const createComment = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
-    if (!user) {
-        return res.status(403).send();
-    }
-    let newComment = req.body;
-    newComment.userId = user.userId;
-    if (newComment.commentTitle) {
-        let created = await comment_1.Comment.create(newComment);
+    if (user) {
+        let comment = req.body;
+        comment.userId = user.userId;
+        let created = await comment_1.Comment.create(comment);
         res.status(201).json(created);
     }
     else {
-        res.status(400).send();
+        res.status(401).send();
     }
 };
 exports.createComment = createComment;

@@ -16,7 +16,7 @@ export const createFair: RequestHandler = async (req, res, next) => {
     }
     
     let newFair: Fair = req.body;
-    newFair.userId = user.userId;
+    // newFair.userId = user.userId;
     
     if (newFair.fairTitle) {
         let created = await Fair.create(newFair);
@@ -45,7 +45,7 @@ export const updateFair: RequestHandler = async (req, res, next) => {
     let fairFound = await Fair.findByPk(fairId);
     
     if (fairFound && fairFound.fairId == newFair.fairId
-        && newFair.fairTitle && newFair.userId) {
+        && newFair.fairTitle && newFair) {
             await Fair.update(newFair, {
                 where: { fairId: fairId }
             });
