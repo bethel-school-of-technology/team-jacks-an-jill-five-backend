@@ -1,29 +1,36 @@
 import { RequestHandler } from "express";
 import { Comment } from "../models/comment";
 import { User } from "../models/user";
+import { Fair } from "../models/fair";
 import { verifyUser } from "../services/auth";
 
 export const getAllComments: RequestHandler = async (req, res, next) => {
-    let comments = await Comment.findAll();
-    res.status(200).json(comments);
+ let user: User | null = await verifyUser(req);
+
+ if(user) {
+    const result = await User.findByPk(user.userId, {
+        include: Fair
+    });
+
+    res.status(200).json(result);
+ }
+ else {
+    res.status(401).send();
+ }
 }
 
 export const createComment: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req);
 
-    if (!user) {
-        return res.status(403).send();
-    }
-    
-    let newComment: Comment = req.body;
-    newComment.userId = user.userId;
-    
-    if (newComment.commentTitle) {
-        let created = await Comment.create(newComment);
+    if (user) {
+        let comment: Comment = req.body;
+        comment.userId = user.userId;
+
+        let created = await Comment.create(comment);
         res.status(201).json(created);
     }
     else {
-        res.status(400).send();
+        res.status(401).send();
     }
 }
 

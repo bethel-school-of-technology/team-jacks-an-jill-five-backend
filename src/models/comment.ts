@@ -5,8 +5,8 @@ import { Fair } from "./fair"
 export class Comment extends Model<InferAttributes<Comment>, InferCreationAttributes<Comment>>{
     declare commentId: number;
     declare commentTitle: string;
-    // declare userId: number;
-    // declare fairId: number;
+    declare userId: number;
+    declare fairId: number;
     declare createdAt?: Date;
     declare updatedAt?: Date;
 }
@@ -24,14 +24,14 @@ export function CommentFactory(sequelize: Sequelize) {
             allowNull: false,
             unique: true
         },
-    //     userId: {
-    //         type: DataTypes.INTEGER,
-    //         allowNull: false
-    //   },
-    //     fairId: {
-    //         type: DataTypes.INTEGER,
-    //         allowNull: false
-    // },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+      },
+        fairId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+    },
         createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
@@ -49,6 +49,8 @@ export function CommentFactory(sequelize: Sequelize) {
     });
 
     User.belongsToMany(Fair, { through: Comment });
-    Fair.belongsToMany(User, { through: Comment }); 
+    Fair.belongsToMany(User, { through: Comment });
+    // User.belongsToMany(Fair, { through: Comment, foreignKey: "userId" });
+    // Fair.belongsToMany(User, { through: Comment, foreignKey: "movieId" });  
 };
 

@@ -14,7 +14,7 @@ const createFair = async (req, res, next) => {
         return res.status(403).send();
     }
     let newFair = req.body;
-    newFair.userId = user.userId;
+    // newFair.userId = user.userId;
     if (newFair.fairTitle) {
         let created = await fair_1.Fair.create(newFair);
         res.status(201).json(created);
@@ -40,7 +40,7 @@ const updateFair = async (req, res, next) => {
     let newFair = req.body;
     let fairFound = await fair_1.Fair.findByPk(fairId);
     if (fairFound && fairFound.fairId == newFair.fairId
-        && newFair.fairTitle && newFair.userId) {
+        && newFair.fairTitle && newFair) {
         await fair_1.Fair.update(newFair, {
             where: { fairId: fairId }
         });
