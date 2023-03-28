@@ -1,5 +1,5 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
-import { User } from "./user";
+// import { User } from "./user";
 
 export class Fair extends Model<InferAttributes<Fair>, InferCreationAttributes<Fair>>{
     declare fairId: number;
@@ -12,7 +12,7 @@ export class Fair extends Model<InferAttributes<Fair>, InferCreationAttributes<F
     declare fairDescription: string;
     declare fairWebsite: string;
     declare fairImage: string;
-    declare userId: number;
+    // declare userId: number;
     declare createdAt?: Date;
     declare updatedAt?: Date;
 }
@@ -70,10 +70,10 @@ export function FairFactory(sequelize: Sequelize) {
             allowNull: true,
             unique: false
         },
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
+        // userId: {
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false
+        // },
         createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
@@ -91,7 +91,8 @@ export function FairFactory(sequelize: Sequelize) {
     });
 };
 
-export function AssociateUserFairPost() {
-    User.hasMany(Fair, { foreignKey: 'userId' });
-    Fair.belongsTo(User, { foreignKey: 'userId' });
-};
+// Re-coded this into the CommentFactory
+// export function AssociateUserFairPost() {
+//     User.hasMany(Fair, { foreignKey: 'userId' });
+//     Fair.belongsTo(User, { foreignKey: 'userId' });
+// };

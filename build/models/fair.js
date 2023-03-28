@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AssociateUserFairPost = exports.FairFactory = exports.Fair = void 0;
+exports.FairFactory = exports.Fair = void 0;
 const sequelize_1 = require("sequelize");
-const user_1 = require("./user");
+// import { User } from "./user";
 class Fair extends sequelize_1.Model {
 }
 exports.Fair = Fair;
@@ -59,10 +59,10 @@ function FairFactory(sequelize) {
             allowNull: true,
             unique: false
         },
-        userId: {
-            type: sequelize_1.DataTypes.INTEGER,
-            allowNull: false
-        },
+        // userId: {
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false
+        // },
         createdAt: {
             type: sequelize_1.DataTypes.DATE,
             allowNull: false,
@@ -81,9 +81,8 @@ function FairFactory(sequelize) {
 }
 exports.FairFactory = FairFactory;
 ;
-function AssociateUserFairPost() {
-    user_1.User.hasMany(Fair, { foreignKey: 'userId' });
-    Fair.belongsTo(user_1.User, { foreignKey: 'userId' });
-}
-exports.AssociateUserFairPost = AssociateUserFairPost;
-;
+// Re-coded this into the CommentFactory
+// export function AssociateUserFairPost() {
+//     User.hasMany(Fair, { foreignKey: 'userId' });
+//     Fair.belongsTo(User, { foreignKey: 'userId' });
+// };

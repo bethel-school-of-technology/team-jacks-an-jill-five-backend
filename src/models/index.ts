@@ -1,16 +1,21 @@
 import { config } from "dotenv";
 import { Sequelize } from "sequelize";
 import { CommentFactory } from "./comment";
-import { AssociateUserFairPost, FairFactory } from "./fair";
+import { FairFactory } from "./fair";
 import { UserFactory } from "./user";
 
 config();
+
+// const dbName = 'fairDB';
+// const username = 'root';
+// const password = 'Password1!'
 
 const dbName = 'fairdb';
 const username = 'wkhammersmith';
 const password = 'jacksandjill5'
 
 const sequelize = new Sequelize(dbName, username, password, {
+    // host: 'localhost',
     host: 'db4free.net',
     port: 3306,
     dialect: 'mysql'
@@ -19,6 +24,8 @@ const sequelize = new Sequelize(dbName, username, password, {
 UserFactory(sequelize);
 FairFactory(sequelize);
 CommentFactory(sequelize);
-AssociateUserFairPost();
+
+// Re-coded this into the CommentsFactory
+// AssociateUserFairPost();
 
 export const db = sequelize;
