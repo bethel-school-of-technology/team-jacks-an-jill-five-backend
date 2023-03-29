@@ -15,6 +15,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     declare userState: string;
     declare userZip: string;
     declare userReferral: string;
+    declare userImage: string;
     declare createdAt?: Date;
     declare updatedAt?: Date;
 };
@@ -35,6 +36,7 @@ export function UserFactory(sequelize: Sequelize) {
         password: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true
         },
         userEmail: {
             type: DataTypes.STRING,
@@ -44,18 +46,27 @@ export function UserFactory(sequelize: Sequelize) {
         userCity: {
             type: DataTypes.STRING,
             allowNull: true,
+            unique: false
         },
         userState: {
             type: DataTypes.STRING,
             allowNull: true,
+            unique: false
         },
         userZip: {
             type: DataTypes.STRING,
             allowNull: true,
+            unique: false
         },
         userReferral: {
             type: DataTypes.STRING,
             allowNull: true,
+            unique: false
+        },
+        userImage: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: false
         },
         createdAt: {
             type: DataTypes.DATE,

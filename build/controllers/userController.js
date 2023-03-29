@@ -41,7 +41,7 @@ exports.loginUser = loginUser;
 const getUser = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     if (user) {
-        let { userId, username, userCity, userState, userZip, userEmail, userReferral } = user;
+        let { userId, username, userCity, userState, userZip, userEmail, userReferral, userImage } = user;
         res.status(200).json({
             userId,
             username,
@@ -49,7 +49,8 @@ const getUser = async (req, res, next) => {
             userState,
             userZip,
             userEmail,
-            userReferral
+            userReferral,
+            userImage
         });
     }
     else {
