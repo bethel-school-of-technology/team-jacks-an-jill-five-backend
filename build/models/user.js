@@ -22,6 +22,7 @@ function UserFactory(sequelize) {
         password: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false,
+            unique: true
         },
         userEmail: {
             type: sequelize_1.DataTypes.STRING,
@@ -31,18 +32,27 @@ function UserFactory(sequelize) {
         userCity: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: true,
+            unique: false
         },
         userState: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: true,
+            unique: false
         },
         userZip: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: true,
+            unique: false
         },
         userReferral: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: true,
+            unique: false
+        },
+        userImage: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: true,
+            unique: false
         },
         createdAt: {
             type: sequelize_1.DataTypes.DATE,
