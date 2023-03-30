@@ -56,7 +56,7 @@ export function FairFactory(sequelize: Sequelize) {
             unique: false
         },
         fairDescription: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: true,
             unique: false
         },
@@ -66,7 +66,7 @@ export function FairFactory(sequelize: Sequelize) {
             unique: false
         },
         fairImage: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(512),
             allowNull: true,
             unique: false
         },
