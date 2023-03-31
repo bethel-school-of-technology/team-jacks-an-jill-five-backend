@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { Comment } from "../models/comment";
 import { Fair } from "../models/fair";
 import { User } from "../models/user";
 import { verifyUser } from "../services/auth";
@@ -28,8 +29,11 @@ export const createFair: RequestHandler = async (req, res, next) => {
 }
 
 export const getFair: RequestHandler = async (req, res, next) => {
+    // Comment.create({commentTitle: 'Test 2', FairfairId: 4});
     let fairId = req.params.fairId;
-    let fairFound = await Fair.findByPk(fairId);
+    let fairFound = await Fair.findByPk(fairId, {
+        include: Comment
+    });
     if (fairFound) {
         res.status(200).json(fairFound);
     }

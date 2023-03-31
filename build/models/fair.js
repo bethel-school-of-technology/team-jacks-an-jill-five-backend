@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FairFactory = exports.Fair = void 0;
 const sequelize_1 = require("sequelize");
-// import { User } from "./user";
+// const comment = require("./comment");
+// import { Comment } from "./comment";
+const user_1 = require("./user");
 class Fair extends sequelize_1.Model {
 }
 exports.Fair = Fair;
@@ -78,6 +80,8 @@ function FairFactory(sequelize) {
         tableName: 'fairs',
         sequelize
     });
+    Fair.belongsTo(user_1.User);
+    // Fair.hasMany(Comment);
 }
 exports.FairFactory = FairFactory;
 ;
