@@ -18,16 +18,16 @@ function CommentFactory(sequelize) {
         commentTitle: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false,
-            unique: true
+            unique: false
         },
-        userId: {
-            type: sequelize_1.DataTypes.INTEGER,
-            allowNull: false
-        },
-        fairId: {
-            type: sequelize_1.DataTypes.INTEGER,
-            allowNull: false
-        },
+        //     userId: {
+        //         type: DataTypes.INTEGER,
+        //         allowNull: false
+        //   },
+        //     fairId: {
+        //         type: DataTypes.INTEGER,
+        //         allowNull: false
+        // },
         createdAt: {
             type: sequelize_1.DataTypes.DATE,
             allowNull: false,
@@ -43,8 +43,11 @@ function CommentFactory(sequelize) {
         tableName: 'comments',
         sequelize
     });
-    user_1.User.belongsToMany(fair_1.Fair, { through: Comment });
-    fair_1.Fair.belongsToMany(user_1.User, { through: Comment });
+    Comment.belongsTo(user_1.User);
+    Comment.belongsTo(fair_1.Fair);
+    fair_1.Fair.hasMany(Comment);
+    // User.belongsToMany(Fair, { through: Comment });
+    // Fair.belongsToMany(User, { through: Comment });
     // User.belongsToMany(Fair, { through: Comment, foreignKey: "userId" });
     // Fair.belongsToMany(User, { through: Comment, foreignKey: "movieId" });  
 }
