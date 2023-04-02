@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteFair = exports.updateFair = exports.getFair = exports.createFair = exports.getAllFairs = void 0;
 const comment_1 = require("../models/comment");
 const fair_1 = require("../models/fair");
+const user_1 = require("../models/user");
 const auth_1 = require("../services/auth");
 const getAllFairs = async (req, res, next) => {
     let fairs = await fair_1.Fair.findAll();
@@ -26,10 +27,10 @@ const createFair = async (req, res, next) => {
 };
 exports.createFair = createFair;
 const getFair = async (req, res, next) => {
-    // Comment.create({commentTitle: 'Test 2', FairfairId: 4});
+    // Comment.create({commentTitle: 'Test 2', FairFairId: 4});
     let fairId = req.params.fairId;
     let fairFound = await fair_1.Fair.findByPk(fairId, {
-        include: comment_1.Comment
+        include: [comment_1.Comment, user_1.User]
     });
     if (fairFound) {
         res.status(200).json(fairFound);

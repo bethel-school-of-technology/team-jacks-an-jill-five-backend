@@ -9,7 +9,7 @@ const getAllComments = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     if (user) {
         const result = await user_1.User.findByPk(user.userId, {
-            include: fair_1.Fair
+            include: [fair_1.Fair, user_1.User]
         });
         res.status(200).json(result);
     }
@@ -20,15 +20,27 @@ const getAllComments = async (req, res, next) => {
 exports.getAllComments = getAllComments;
 const createComment = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
-    if (user) {
-        let comment = req.body;
-        comment.userId = user.userId;
-        let created = await comment_1.Comment.create(comment);
+    if (!user) {
+        return res.status(403).send();
+    }
+    let newComment = req.body;
+    newComment.userId = user.userId;
+    if (newComment.commentTitle) {
+        let created = await comment_1.Comment.create(newComment);
         res.status(201).json(created);
     }
     else {
-        res.status(401).send();
+        res.status(400).send();
     }
+    // if (user) {
+    //     let comment: Comment = req.body;
+    //     comment.userId = user.userId;
+    //     let created = await Comment.create(comment);
+    //     res.status(201).json(created);
+    // }
+    // else {
+    //     res.status(401).send();
+    // }
 };
 exports.createComment = createComment;
 const getComment = async (req, res, next) => {
