@@ -9,7 +9,7 @@ export const getAllComments: RequestHandler = async (req, res, next) => {
 
  if(user) {
     const result = await User.findByPk(user.userId, {
-        include: Fair
+        include: [Fair, User]
     });
 
     res.status(200).json(result);
@@ -22,16 +22,31 @@ export const getAllComments: RequestHandler = async (req, res, next) => {
 export const createComment: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req);
 
-    if (user) {
-        let comment: Comment = req.body;
-        comment.userId = user.userId;
-
-        let created = await Comment.create(comment);
+    if (!user) {
+        return res.status(403).send();
+    }
+    
+    let newComment: Comment = req.body;
+    newComment.userId = user.userId;
+    
+    if (newComment.commentTitle) {
+        let created = await Comment.create(newComment);
         res.status(201).json(created);
     }
     else {
-        res.status(401).send();
+        res.status(400).send();
     }
+
+    // if (user) {
+    //     let comment: Comment = req.body;
+    //     comment.userId = user.userId;
+
+    //     let created = await Comment.create(comment);
+    //     res.status(201).json(created);
+    // }
+    // else {
+    //     res.status(401).send();
+    // }
 }
 
 export const getComment: RequestHandler = async (req, res, next) => {
