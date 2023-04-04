@@ -41,7 +41,7 @@ export const loginUser: RequestHandler = async (req, res, next) => {
     }
 };
 
-export const getUser: RequestHandler = async (req, res, next) => {
+export const getCurrentUser: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req);
 
     if (user) {
