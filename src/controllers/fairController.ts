@@ -15,10 +15,10 @@ export const createFair: RequestHandler = async (req, res, next) => {
     if (!user) {
         return res.status(403).send();
     }
-    
+
     let newFair: Fair = req.body;
-    // newFair.userId = user.userId;
-    
+    newFair.UserUserId = user.userId;
+
     if (newFair.fairTitle) {
         let created = await Fair.create(newFair);
         res.status(201).json(created);
@@ -34,6 +34,7 @@ export const getFair: RequestHandler = async (req, res, next) => {
     let fairFound = await Fair.findByPk(fairId, {
         include: [Comment, User]
     });
+
     if (fairFound) {
         res.status(200).json(fairFound);
     }
@@ -45,15 +46,15 @@ export const getFair: RequestHandler = async (req, res, next) => {
 export const updateFair: RequestHandler = async (req, res, next) => {
     let fairId = req.params.fairId;
     let newFair: Fair = req.body;
-    
+
     let fairFound = await Fair.findByPk(fairId);
-    
+
     if (fairFound && fairFound.fairId == newFair.fairId
         && newFair.fairTitle && newFair) {
-            await Fair.update(newFair, {
-                where: { fairId: fairId }
-            });
-            res.status(200).json();
+        await Fair.update(newFair, {
+            where: { fairId: fairId }
+        });
+        res.status(200).json();
     }
     else {
         res.status(400).json();
@@ -63,10 +64,10 @@ export const updateFair: RequestHandler = async (req, res, next) => {
 export const deleteFair: RequestHandler = async (req, res, next) => {
     let fairId = req.params.fairId;
     let fairFound = await Fair.findByPk(fairId);
-    
+
     if (fairFound) {
         await Fair.destroy({
-                where: { fairId: fairId }
+            where: { fairId: fairId }
         });
         res.status(200).json();
     }

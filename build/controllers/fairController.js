@@ -16,7 +16,7 @@ const createFair = async (req, res, next) => {
         return res.status(403).send();
     }
     let newFair = req.body;
-    // newFair.userId = user.userId;
+    newFair.UserUserId = user.userId;
     if (newFair.fairTitle) {
         let created = await fair_1.Fair.create(newFair);
         res.status(201).json(created);

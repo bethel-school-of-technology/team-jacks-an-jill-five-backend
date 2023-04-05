@@ -61,10 +61,10 @@ function FairFactory(sequelize) {
             allowNull: true,
             unique: false
         },
-        // userId: {
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false
-        // },
+        UserUserId: {
+            type: sequelize_1.DataTypes.INTEGER,
+            allowNull: false
+        },
         createdAt: {
             type: sequelize_1.DataTypes.DATE,
             allowNull: false,

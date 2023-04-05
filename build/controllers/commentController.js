@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteComment = exports.updateComment = exports.getComment = exports.createComment = exports.getAllComments = void 0;
+exports.deleteComment = exports.updateComment = exports.getComment = exports.createComment = exports.getUserComments = exports.getAllComments = void 0;
 const comment_1 = require("../models/comment");
 const user_1 = require("../models/user");
 const fair_1 = require("../models/fair");
@@ -18,13 +18,30 @@ const getAllComments = async (req, res, next) => {
     }
 };
 exports.getAllComments = getAllComments;
+const getUserComments = async (req, res, next) => {
+    // getting logged in user with token
+    let user = await (0, auth_1.verifyUser)(req);
+    if (user) {
+        // getting comments made by this user
+        const result = await user_1.User.findByPk(user.userId, {
+            include: [fair_1.Fair, comment_1.Comment]
+        });
+        res.status(200).json(result);
+    }
+    else {
+        res.status(401).send();
+    }
+};
+exports.getUserComments = getUserComments;
 const createComment = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
+    // let fair: Fair = req.body.fairId
     if (!user) {
         return res.status(403).send();
     }
     let newComment = req.body;
-    newComment.userId = user.userId;
+    newComment.UserUserId = user.userId;
+    // newComment.FairFairId = fair.fairId;
     if (newComment.commentTitle) {
         let created = await comment_1.Comment.create(newComment);
         res.status(201).json(created);
@@ -32,15 +49,6 @@ const createComment = async (req, res, next) => {
     else {
         res.status(400).send();
     }
-    // if (user) {
-    //     let comment: Comment = req.body;
-    //     comment.userId = user.userId;
-    //     let created = await Comment.create(comment);
-    //     res.status(201).json(created);
-    // }
-    // else {
-    //     res.status(401).send();
-    // }
 };
 exports.createComment = createComment;
 const getComment = async (req, res, next) => {
@@ -59,7 +67,7 @@ const updateComment = async (req, res, next) => {
     let newComment = req.body;
     let commentFound = await comment_1.Comment.findByPk(commentId);
     if (commentFound && commentFound.commentId == newComment.commentId
-        && newComment.commentTitle && newComment.userId) {
+        && newComment.commentTitle && newComment.UserUserId) {
         await comment_1.Comment.update(newComment, {
             where: { commentId: commentId }
         });
