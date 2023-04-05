@@ -20,14 +20,14 @@ function CommentFactory(sequelize) {
             allowNull: false,
             unique: false
         },
-        //     userId: {
-        //         type: DataTypes.INTEGER,
-        //         allowNull: false
-        //   },
-        //     fairId: {
-        //         type: DataTypes.INTEGER,
-        //         allowNull: false
-        // },
+        UserUserId: {
+            type: sequelize_1.DataTypes.INTEGER,
+            allowNull: false
+        },
+        FairFairId: {
+            type: sequelize_1.DataTypes.INTEGER,
+            allowNull: true
+        },
         createdAt: {
             type: sequelize_1.DataTypes.DATE,
             allowNull: false,
