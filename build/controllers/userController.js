@@ -63,6 +63,9 @@ const updateUser = async (req, res, next) => {
 exports.updateUser = updateUser;
 const getCurrentUser = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
+    if (!user) {
+        return res.status(401).send();
+    }
     let userFound = await user_1.User.findByPk(user.userId, {
         include: fair_1.Fair
     });

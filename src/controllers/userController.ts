@@ -70,6 +70,10 @@ export const updateUser: RequestHandler = async (req, res, next) => {
 export const getCurrentUser: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req);
 
+    if (!user) {
+        return res.status(401).send();
+    }
+
     let userFound = await User.findByPk(user.userId, {
         include: Fair
     });
