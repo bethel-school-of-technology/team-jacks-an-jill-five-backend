@@ -3,6 +3,7 @@ import { Comment } from "../models/comment";
 import { Fair } from "../models/fair";
 import { User } from "../models/user";
 import { verifyUser } from "../services/auth";
+import { Op } from "sequelize";
 
 export const getAllFairs: RequestHandler = async (req, res, next) => {
     let fairs = await Fair.findAll();
@@ -37,6 +38,35 @@ export const getFair: RequestHandler = async (req, res, next) => {
 
     if (fairFound) {
         res.status(200).json(fairFound);
+    }
+    else {
+        res.status(404).json();
+    }
+}
+
+export const searchFairs: RequestHandler = async (req, res, next) => {
+    // Comment.create({commentTitle: 'Test 2', FairFairId: 4});
+    let searchQuery = req.params.searchQuery;
+    let fairs = await Fair.findAll({
+        where: {
+            [Op.or]: [
+                {
+                    fairTitle: 
+                    {  [Op.like]: `%${searchQuery}%` }
+                },
+                {
+                    fairCity: 
+                    {  [Op.like]: `%${searchQuery}%` }
+                },
+            ],
+          
+            // { authorId: 13 }
+          
+        }
+      });
+
+    if (fairs) {
+        res.status(200).json(fairs);
     }
     else {
         res.status(404).json();

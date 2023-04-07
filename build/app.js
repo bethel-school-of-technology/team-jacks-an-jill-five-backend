@@ -15,6 +15,17 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 const cors = require('cors');
 app.use(cors());
+// Fair Search Feature
+// app.get("/", (req, res) => {
+//     const { q } = req.query;
+//     const keys = ["fairTitle", "fairCity"];
+//     const search = (data) => {
+//       return data.filter((fair) =>
+//         keys.some((key) => fair[key].toLowerCase().includes(q))
+//       );
+//     };
+//     q ? res.json(search(Fair).slice(0, 10)) : res.json(Fair.slice(0, 10));
+//   });
 // routes
 app.use('/api/fairs', fairRoutes_1.default);
 app.use('/api/comments', commentRoutes_1.default);
