@@ -24,7 +24,7 @@ const getUserComments = async (req, res, next) => {
     if (user) {
         // getting comments made by this user
         const result = await user_1.User.findByPk(user.userId, {
-            include: [fair_1.Fair, comment_1.Comment]
+            include: fair_1.Fair
         });
         res.status(200).json(result);
     }

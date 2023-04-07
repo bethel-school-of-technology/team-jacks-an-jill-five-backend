@@ -52,9 +52,5 @@ export function CommentFactory(sequelize: Sequelize) {
     Comment.belongsTo(Fair);
     Fair.hasMany(Comment)
 
-    // User.belongsToMany(Fair, { through: Comment });
-    // Fair.belongsToMany(User, { through: Comment });
-    // User.belongsToMany(Fair, { through: Comment, foreignKey: "userId" });
-    // Fair.belongsToMany(User, { through: Comment, foreignKey: "movieId" });  
 };
 

@@ -83,5 +83,5 @@ export function UserFactory(sequelize: Sequelize) {
             freezeTableName: true,
             tableName: 'users',
             sequelize
-        })
+        });
 };

@@ -1,6 +1,4 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
-// const comment = require("./comment");
-// import { Comment } from "./comment";
 import { User } from "./user";
 
 export class Fair extends Model<InferAttributes<Fair>, InferCreationAttributes<Fair>>{
@@ -93,8 +91,8 @@ export function FairFactory(sequelize: Sequelize) {
     });
 
     Fair.belongsTo(User);
+    User.hasMany(Fair);
 
-    // Fair.hasMany(Comment);
 };
 
 // Re-coded this into the CommentFactory

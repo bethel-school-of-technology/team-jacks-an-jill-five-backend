@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCurrentUser = exports.loginUser = exports.createUser = void 0;
+exports.getUserById = exports.getCurrentUser = exports.updateUser = exports.loginUser = exports.createUser = void 0;
+const fair_1 = require("../models/fair");
 const user_1 = require("../models/user");
 const auth_1 = require("../services/auth");
 const createUser = async (req, res, next) => {
@@ -38,10 +39,35 @@ const loginUser = async (req, res, next) => {
     }
 };
 exports.loginUser = loginUser;
+const updateUser = async (req, res, next) => {
+    let user = await (0, auth_1.verifyUser)(req);
+    if (!user) {
+        return res.status(401).send();
+    }
+    let userId = req.params.userId;
+    let updatedUser = req.body;
+    let userFound = await user_1.User.findByPk(userId);
+    if (userFound && userFound.userId == updatedUser.userId
+        && updatedUser.userState && updatedUser.userCity
+        && updatedUser.userZip && updatedUser.userEmail
+        && updatedUser.userImage && updatedUser.username && updatedUser) {
+        await user_1.User.update(updatedUser, {
+            where: { userId: userId }
+        });
+        res.status(200).json();
+    }
+    else {
+        res.status(400).json();
+    }
+};
+exports.updateUser = updateUser;
 const getCurrentUser = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
-    if (user) {
-        let { userId, username, userCity, userState, userZip, userEmail, userReferral, userImage } = user;
+    let userFound = await user_1.User.findByPk(user.userId, {
+        include: fair_1.Fair
+    });
+    if (userFound) {
+        let { userId, username, userCity, userState, userZip, userEmail, userReferral, userImage, Fairs } = userFound;
         res.status(200).json({
             userId,
             username,
@@ -50,7 +76,8 @@ const getCurrentUser = async (req, res, next) => {
             userZip,
             userEmail,
             userReferral,
-            userImage
+            userImage,
+            Fairs
         });
     }
     else {
@@ -58,3 +85,26 @@ const getCurrentUser = async (req, res, next) => {
     }
 };
 exports.getCurrentUser = getCurrentUser;
+const getUserById = async (req, res, next) => {
+    let userId = req.params.userId;
+    let userFound = await user_1.User.findByPk(userId, {
+        include: fair_1.Fair
+    });
+    if (userFound) {
+        let { userId, username, userCity, userState, userZip, userReferral, userImage, Fairs } = userFound;
+        res.status(200).json({
+            userId,
+            username,
+            userCity,
+            userState,
+            userZip,
+            userReferral,
+            userImage,
+            Fairs
+        });
+    }
+    else {
+        res.status(404).send();
+    }
+};
+exports.getUserById = getUserById;

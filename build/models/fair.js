@@ -81,6 +81,7 @@ function FairFactory(sequelize) {
         sequelize
     });
     Fair.belongsTo(user_1.User);
+    user_1.User.hasMany(Fair);
     // Fair.hasMany(Comment);
 }
 exports.FairFactory = FairFactory;

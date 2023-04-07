@@ -7,7 +7,7 @@ import { verifyUser } from "../services/auth";
 export const getAllFairs: RequestHandler = async (req, res, next) => {
     let fairs = await Fair.findAll();
     res.status(200).json(fairs);
-}
+};
 
 export const createFair: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req);
@@ -26,7 +26,7 @@ export const createFair: RequestHandler = async (req, res, next) => {
     else {
         res.status(400).send();
     }
-}
+};
 
 export const getFair: RequestHandler = async (req, res, next) => {
     // Comment.create({commentTitle: 'Test 2', FairFairId: 4});
@@ -41,7 +41,7 @@ export const getFair: RequestHandler = async (req, res, next) => {
     else {
         res.status(404).json();
     }
-}
+};
 
 export const updateFair: RequestHandler = async (req, res, next) => {
     let fairId = req.params.fairId;
@@ -59,7 +59,7 @@ export const updateFair: RequestHandler = async (req, res, next) => {
     else {
         res.status(400).json();
     }
-}
+};
 
 export const deleteFair: RequestHandler = async (req, res, next) => {
     let fairId = req.params.fairId;
@@ -74,4 +74,4 @@ export const deleteFair: RequestHandler = async (req, res, next) => {
     else {
         res.status(404).json();
     }
-}
+};
