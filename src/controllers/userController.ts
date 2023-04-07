@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { Fair } from "../models/fair";
 import { User } from "../models/user";
 import { comparePasswords, hashPassword, signUserToken, verifyUser } from "../services/auth";
 
@@ -41,11 +42,40 @@ export const loginUser: RequestHandler = async (req, res, next) => {
     }
 };
 
+export const updateUser: RequestHandler = async (req, res, next) => {
+    let user: User | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(401).send();
+    }
+
+    let userId = req.params.userId
+    let updatedUser: User = req.body;
+
+    let userFound = await User.findByPk(userId);
+
+    if (userFound && userFound.userId == updatedUser.userId
+        && updatedUser.userState && updatedUser.userCity
+        && updatedUser.userZip && updatedUser.userEmail
+        && updatedUser.userImage && updatedUser.username && updatedUser) {
+        await User.update(updatedUser, {
+            where: { userId: userId }
+        });
+        res.status(200).json();
+    } else {
+        res.status(400).json();
+    }
+};
+
 export const getCurrentUser: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req);
 
-    if (user) {
-        let { userId, username, userCity, userState, userZip, userEmail, userReferral, userImage } = user;
+    let userFound = await User.findByPk(user.userId, {
+        include: Fair
+    });
+
+    if (userFound) {
+        let { userId, username, userCity, userState, userZip, userEmail, userReferral, userImage, Fairs } = userFound;
         res.status(200).json({
             userId,
             username,
@@ -54,10 +84,38 @@ export const getCurrentUser: RequestHandler = async (req, res, next) => {
             userZip,
             userEmail,
             userReferral,
-            userImage
+            userImage,
+            Fairs
         });
     }
     else {
         res.status(401).send();
+    }
+};
+
+
+
+export const getUserById: RequestHandler = async (req, res, next) => {
+
+    let userId = req.params.userId;
+    let userFound = await User.findByPk(userId, {
+        include: Fair
+    });
+
+    if (userFound) {
+        let { userId, username, userCity, userState, userZip, userReferral, userImage, Fairs } = userFound;
+        res.status(200).json({
+            userId,
+            username,
+            userCity,
+            userState,
+            userZip,
+            userReferral,
+            userImage,
+            Fairs
+        });
+    }
+    else {
+        res.status(404).send();
     }
 };
