@@ -63,7 +63,7 @@ const updateUser = async (req, res, next) => {
 exports.updateUser = updateUser;
 const getCurrentUser = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
-    let userFound = await user_1.User.findByPk(user.userId, {
+    let userFound = await user_1.User.findByPk(user?.userId, {
         include: fair_1.Fair
     });
     if (userFound) {
@@ -91,13 +91,12 @@ const getUserById = async (req, res, next) => {
         include: fair_1.Fair
     });
     if (userFound) {
-        let { userId, username, userCity, userState, userZip, userReferral, userImage, Fairs } = userFound;
+        let { userId, username, userCity, userState, userReferral, userImage, Fairs } = userFound;
         res.status(200).json({
             userId,
             username,
             userCity,
             userState,
-            userZip,
             userReferral,
             userImage,
             Fairs
