@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteFair = exports.updateFair = exports.getFair = exports.createFair = exports.getAllFairs = void 0;
+exports.deleteFair = exports.updateFair = exports.searchFairs = exports.getFair = exports.createFair = exports.getAllFairs = void 0;
 const comment_1 = require("../models/comment");
 const fair_1 = require("../models/fair");
 const user_1 = require("../models/user");
 const auth_1 = require("../services/auth");
+const sequelize_1 = require("sequelize");
 const getAllFairs = async (req, res, next) => {
     let fairs = await fair_1.Fair.findAll();
     res.status(200).json(fairs);
@@ -40,6 +41,30 @@ const getFair = async (req, res, next) => {
     }
 };
 exports.getFair = getFair;
+const searchFairs = async (req, res, next) => {
+    // Comment.create({commentTitle: 'Test 2', FairFairId: 4});
+    let searchQuery = req.params.searchQuery;
+    let fairs = await fair_1.Fair.findAll({
+        where: {
+            [sequelize_1.Op.or]: [
+                {
+                    fairTitle: { [sequelize_1.Op.like]: `%${searchQuery}%` }
+                },
+                {
+                    fairCity: { [sequelize_1.Op.like]: `%${searchQuery}%` }
+                },
+            ],
+            // { authorId: 13 }
+        }
+    });
+    if (fairs) {
+        res.status(200).json(fairs);
+    }
+    else {
+        res.status(404).json();
+    }
+};
+exports.searchFairs = searchFairs;
 const updateFair = async (req, res, next) => {
     let fairId = req.params.fairId;
     let newFair = req.body;

@@ -4,6 +4,7 @@ import { db } from './models';
 import fairRoutes from './routes/fairRoutes'
 import userRoutes from './routes/userRoutes';
 import commentRoutes from './routes/commentRoutes'
+import { Fair } from './models/fair';
 
 const app = express();
 
@@ -14,6 +15,22 @@ app.use(express.urlencoded({ extended: true }));
 
 const cors = require('cors');
 app.use(cors());
+
+// Fair Search Feature
+// app.get("/", (req, res) => {
+//     const { q } = req.query;
+  
+//     const keys = ["fairTitle", "fairCity"];
+  
+//     const search = (data) => {
+//       return data.filter((fair) =>
+//         keys.some((key) => fair[key].toLowerCase().includes(q))
+//       );
+//     };
+  
+//     q ? res.json(search(Fair).slice(0, 10)) : res.json(Fair.slice(0, 10));
+//   });
+
 
 // routes
 
