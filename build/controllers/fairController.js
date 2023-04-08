@@ -53,8 +53,10 @@ const searchFairs = async (req, res, next) => {
                 {
                     fairCity: { [sequelize_1.Op.like]: `%${searchQuery}%` }
                 },
+                {
+                    fairState: { [sequelize_1.Op.like]: `%${searchQuery}%` }
+                },
             ],
-            // { authorId: 13 }
         }
     });
     if (fairs) {
