@@ -5,7 +5,9 @@ import { comparePasswords, hashPassword, signUserToken, verifyUser } from "../se
 
 
 export const createUser: RequestHandler = async (req, res, next) => {
+    
     let newUser: User = req.body;
+
     if (newUser.username && newUser.password) {
         let hashedPassword = await hashPassword(newUser.password);
         newUser.password = hashedPassword;
@@ -43,6 +45,7 @@ export const loginUser: RequestHandler = async (req, res, next) => {
 };
 
 export const updateUser: RequestHandler = async (req, res, next) => {
+    
     let user: User | null = await verifyUser(req);
 
     if (!user) {
@@ -68,6 +71,7 @@ export const updateUser: RequestHandler = async (req, res, next) => {
 };
 
 export const getCurrentUser: RequestHandler = async (req, res, next) => {
+    
     let user: User | null = await verifyUser(req);
 
     let userFound = await User.findByPk(user?.userId, {
