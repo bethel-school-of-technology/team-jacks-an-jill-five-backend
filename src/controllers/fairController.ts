@@ -11,10 +11,11 @@ export const getAllFairs: RequestHandler = async (req, res, next) => {
 };
 
 export const createFair: RequestHandler = async (req, res, next) => {
+    
     let user: User | null = await verifyUser(req);
 
     if (!user) {
-        return res.status(403).send();
+        return res.status(401).send();
     }
 
     let newFair: Fair = req.body;
@@ -30,7 +31,7 @@ export const createFair: RequestHandler = async (req, res, next) => {
 };
 
 export const getFair: RequestHandler = async (req, res, next) => {
-    // Comment.create({commentTitle: 'Test 2', FairFairId: 4});
+    
     let fairId = req.params.fairId;
     let fairFound = await Fair.findByPk(fairId, {
         include: [Comment, User]
@@ -45,7 +46,7 @@ export const getFair: RequestHandler = async (req, res, next) => {
 };
 
 export const searchFairs: RequestHandler = async (req, res, next) => {
-    // Comment.create({commentTitle: 'Test 2', FairFairId: 4});
+
     let searchQuery = req.params.searchQuery;
     let fairs = await Fair.findAll({
         where: {
@@ -59,9 +60,7 @@ export const searchFairs: RequestHandler = async (req, res, next) => {
                     {  [Op.like]: `%${searchQuery}%` }
                 },
             ],
-          
-            // { authorId: 13 }
-          
+                    
         }
       });
 
@@ -74,6 +73,7 @@ export const searchFairs: RequestHandler = async (req, res, next) => {
 }
 
 export const updateFair: RequestHandler = async (req, res, next) => {
+    
     let fairId = req.params.fairId;
     let newFair: Fair = req.body;
 
@@ -92,6 +92,7 @@ export const updateFair: RequestHandler = async (req, res, next) => {
 };
 
 export const deleteFair: RequestHandler = async (req, res, next) => {
+    
     let fairId = req.params.fairId;
     let fairFound = await Fair.findByPk(fairId);
 
