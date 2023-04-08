@@ -70,7 +70,7 @@ export const updateUser: RequestHandler = async (req, res, next) => {
 export const getCurrentUser: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req);
 
-    let userFound = await User.findByPk(user.userId, {
+    let userFound = await User.findByPk(user?.userId, {
         include: Fair
     });
 
@@ -93,8 +93,6 @@ export const getCurrentUser: RequestHandler = async (req, res, next) => {
     }
 };
 
-
-
 export const getUserById: RequestHandler = async (req, res, next) => {
 
     let userId = req.params.userId;
@@ -103,13 +101,12 @@ export const getUserById: RequestHandler = async (req, res, next) => {
     });
 
     if (userFound) {
-        let { userId, username, userCity, userState, userZip, userReferral, userImage, Fairs } = userFound;
+        let { userId, username, userCity, userState, userReferral, userImage, Fairs } = userFound;
         res.status(200).json({
             userId,
             username,
             userCity,
             userState,
-            userZip,
             userReferral,
             userImage,
             Fairs
