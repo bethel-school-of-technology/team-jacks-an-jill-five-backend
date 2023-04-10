@@ -14,7 +14,7 @@ exports.getAllFairs = getAllFairs;
 const createFair = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
-        return res.status(403).send();
+        return res.status(401).send();
     }
     let newFair = req.body;
     newFair.UserUserId = user.userId;
@@ -28,7 +28,6 @@ const createFair = async (req, res, next) => {
 };
 exports.createFair = createFair;
 const getFair = async (req, res, next) => {
-    // Comment.create({commentTitle: 'Test 2', FairFairId: 4});
     let fairId = req.params.fairId;
     let fairFound = await fair_1.Fair.findByPk(fairId, {
         include: [comment_1.Comment, user_1.User]
@@ -42,7 +41,6 @@ const getFair = async (req, res, next) => {
 };
 exports.getFair = getFair;
 const searchFairs = async (req, res, next) => {
-    // Comment.create({commentTitle: 'Test 2', FairFairId: 4});
     let searchQuery = req.params.searchQuery;
     let fairs = await fair_1.Fair.findAll({
         where: {
@@ -53,8 +51,10 @@ const searchFairs = async (req, res, next) => {
                 {
                     fairCity: { [sequelize_1.Op.like]: `%${searchQuery}%` }
                 },
+                {
+                    fairState: { [sequelize_1.Op.like]: `%${searchQuery}%` }
+                },
             ],
-            // { authorId: 13 }
         }
     });
     if (fairs) {

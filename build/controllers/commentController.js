@@ -37,7 +37,7 @@ const createComment = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     // let fair: Fair = req.body.fairId
     if (!user) {
-        return res.status(403).send();
+        return res.status(401).send();
     }
     let newComment = req.body;
     newComment.UserUserId = user.userId;

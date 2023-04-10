@@ -59,6 +59,10 @@ export const searchFairs: RequestHandler = async (req, res, next) => {
                     fairCity: 
                     {  [Op.like]: `%${searchQuery}%` }
                 },
+                {
+                    fairState: 
+                    {  [Op.like]: `%${searchQuery}%` }
+                },
             ],
                     
         }
